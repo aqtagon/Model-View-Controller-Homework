@@ -20,3 +20,35 @@ router.get('/', async (req, res) => {
                 },
             ],
         });
+        const posts = dbPostData.map((post) => post.get({ plain: true }));
+
+        res.render('homepage', {
+            posts,
+            logged_in: req.session.loggedIn,
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+router.get('/posts/:id', async (req, res) => {
+    try {
+        const dbPostData = await Post.findOne({
+            where: {
+                id: req.params.id,
+            },
+            include: [
+                {
+                    model: Comment, 
+                    attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                    include: {
+                        model: User,
+                        attributes: ['username'],
+                    },
+                },
+                {
+                    model: User,
+                    attributes: ['username'],
+                },
+            ],
+        });
