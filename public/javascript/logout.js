@@ -1,19 +1,14 @@
-const handleLogout = async () => {
-    try {
-        const respone = await fetch('/api/logout/user', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-        });
+async function logout() {
+    const response = await fetch("/api/users/logout", {
+        method: "post",
+        headers: { "Content-Type": "application/json" }
+    });
 
-        if (response.ok) {
-            window.location.replace('/');
-        } else {
-            alert(`Logout failed: ${response.statusText}`);
-        }
-    } catch (error) {
-        console.error('An error occurred during logout:', error);
-        alert('An unexpected error occurred. Please try again later.');
+    if (response.ok) {
+        document.location.replace("/");
+    } else {
+        alert(response.statusText);
     }
-};
+}
 
-document.querySelector('#logoutBtn').assEventListener('click', handleLogout);
+document.querySelector("#logout").addEventListener("click", logout);

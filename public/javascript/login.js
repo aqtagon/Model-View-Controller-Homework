@@ -1,35 +1,56 @@
 async function loginFormHandler(event) {
     event.preventDefault();
 
-    let endpoint, data;
-
-    if (type === 'login') {
-        const email = document.querySelector(`#${type}-email`).value.trim();
-        const password = document.querySelector(`#${type}-password`).value.trim();
-
-        if (email && password) {
-            endpoint = '/api/users/login';
-            data = { email, password };
-        }
-    } else if (type === 'signup') {
-        const username = document.querySelector(`#${type}-username`).value.trim();
-        const email = document.querySelector(`#${type}-email`).value.trim();
-        const password = document.querySelector(`#${type}-password`).value.trim();
-
-        if (endpoint && data) {
-            const response = await fetch(endpoint, {
-                method: 'post',
-                body: JSON.stringify(data),
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            if (response.ok) {
-                document.location.replace('/dashboard/');
-            } else {
-                alert(response.statusText);
-            }
-        }
+    const email = document.querySelector("#email-login").value.trim();
+    const password = document.querySelector("#password-login").value.trim();
+  
+    if (email && password) {
+      const response = await fetch("/api/users/login", {
+        method: "post",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      // check response status
+      if (response.ok) {
+        document.location.replace("/dashboard/");
+      } else {
+        alert(response.statusText);
+      }
     }
+  }
 
-document.querySelector('.login-form').addEventListener('submit', (event) => handleFormSubmit(event, 'login'));
-document.querySelector('.signup-form').addEventListener('submit', (event) => handleFormSubmit(event, 'signup'));
+async function signupFormHandler(event) {
+  event.preventDefault();
+
+  const username = document.querySelector("#username-signup").value.trim();
+  const email = document.querySelector("#email-signup").value.trim();
+  const password = document.querySelector("#password-signup").value.trim();
+
+  if (username && email && password) {
+    const response = await fetch("/api/users", {
+      method: "post",
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    // check response status
+    if (response.ok) {
+      document.location.replace("/dashboard/");
+    } else {
+      alert(response.statusText);
+    }
+  }
+}
+
+document.querySelector(".login-form").addEventListener("submit", loginFormHandler);
+document
+  .querySelector(".signup-form")
+  .addEventListener("submit", signupFormHandler);
