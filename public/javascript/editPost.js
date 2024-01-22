@@ -14,3 +14,21 @@ async function updatePost(event) {
             body: JSON.stringify({
                 title: postTitle,
             }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            document.location.replace('/dashboard/');
+        } else {
+            alert(response.statusText);
+         }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
+
+document
+    .querySelector('.update-post-form')
+    .addEventListener('submit', updatePost);
