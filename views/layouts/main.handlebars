@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Blog</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <div class='wrapper'>
+    <header>
+        <h1>Tech Blog</h1>
+        <nav>
+            {{#if loggedIn}}
+            <p>Welcome, {{username}}!
+            <a href='/'>Home</a>
+            <a href='/dashboard'>dashboard</a>
+            <button id='logout' class='btn-no-style'>Logout</button></p>
+        {{else}}
+            <p><a href='/login'>Login</a> or <a href='/signup'>Sign Up</a></p>
+        {{/if}}
+        </nav>
+    </header>
+
+    <main>
+        {{{body}}} 
+    </main>
+
+        <footer>
+            <p>&copy; 2024 Tech Blog</p>
+        </footer>
+    </div>
+
+    {{#if loggedIn}}
+    <script src='/javascript/logout.js'></script>
+
+</body>
+</html>
