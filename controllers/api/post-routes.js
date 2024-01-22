@@ -3,13 +3,11 @@ const sequelize = require("../../config/connection");
 const { Post, User, Comment } = require("../../models");
 const withAuth = require("../../utils/auth");
 
-// get all users at /api/posts
+
 router.get("/", (req, res) => {
   console.log("======================");
   Post.findAll({
-    //   through table association
-    // make a JOIN
-    // 3 LEFT OUTER JOINS, post->comment, post->user, comment->user
+    
     include: [
       {
         model: Comment,
@@ -32,7 +30,7 @@ router.get("/", (req, res) => {
     });
 });
 
-// get /api/posts/:id
+
 router.get("/:id", (req, res) => {
   Post.findOne({
     where: {
@@ -72,7 +70,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", withAuth, (req, res) => {
-  // expects {title: "Taskmaster goes public!", user_id: 1}
+  
     Post.create({
       title: req.body.title,
       post_content: req.body.post_content,

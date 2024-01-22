@@ -1,11 +1,9 @@
 const router = require("express").Router();
 const { User, Post, Comment } = require("../../models");
 
-// GET all users /api/users
+
 router.get("/", (req, res) => {
-  // Access our User model and run .findAll() method
-  // .findAll() queries all users from user table, equiv to SELECT*FROM users;
-  // returns an array of data
+
   User.findAll({
     attributes: { exclude: ["password"] },
   })
@@ -16,23 +14,23 @@ router.get("/", (req, res) => {
     });
 });
 
-// GET /api/users/1
+
 router.get("/:id", (req, res) => {
-  // returns single object of data
+  
   User.findOne({
     attributes: { exclude: ["password"] },
-    // equiv to SELECT*FROM users WHERE id=1
+    
     where: {
       id: req.params.id,
     },
     include: [
       {
-        //   get list of posts user created
+        
         model: Post,
         attributes: ["id", "title", "post_content", "created_at"],
       },
       {
-        //   include Post on Comment model so we can see which posts user commented
+        
         model: Comment,
         attributes: ["id", "comment_text", "created_at"],
         include: {
@@ -42,7 +40,7 @@ router.get("/:id", (req, res) => {
       },
     ],
   })
-    // if search for user with no ID value, send 404
+    
     .then((dbUserData) => {
       if (!dbUserData) {
         res.status(404).json({ message: "No user found with this id" });
@@ -56,21 +54,19 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// POST /api/users
+
 router.post("/", (req, res) => {
-  // expects {username: "Lernantino", email: "lernantino@gmail.com", password: "password1234"}
-  // equiv to INSERT INTO users (username, email, password)
-  // VALUES ("Lernantino", "lernantino@gmail.com", "password1234");
+  
   User.create({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
   })
-  // session information
+  
     .then((dbUserData) => {
-      // create session
+      
       req.session.save(() => {
-        // run response callback fx once complete
+        
         req.session.user_id = dbUserData.id;
         req.session.username = dbUserData.username;
         req.session.loggedIn = true;
@@ -85,7 +81,7 @@ router.post("/", (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+    
   User.findOne({
     where: {
       email: req.body.email
@@ -104,7 +100,7 @@ router.post('/login', (req, res) => {
     }
 
     req.session.save(() => {
-      // declare session variables
+      
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
       req.session.loggedIn = true;
@@ -116,7 +112,7 @@ router.post('/login', (req, res) => {
 
 router.post("/logout", (req, res) => {
   if (req.session.loggedIn) {
-    // destroy session variable, reset cookie
+   
     req.session.destroy(() => {
       res.status(204).end();
     });
@@ -125,12 +121,9 @@ router.post("/logout", (req, res) => {
   }
 });
 
-// update with PUT /api/users/1
-router.put("/:id", (req, res) => {
-  // expects {username: "Lernantino", email: "lernantino@gmail.com", password: "password1234"}
 
-  // if req.body has exact key/value pairs to match the model, just use "req.body" to update what's passed through
-  // equiv to UPDATE users SET username = "Lernantino", email = "lernantino@gmail.com", password = "newPassword1234" WHERE id = 1;
+router.put("/:id", (req, res) => {
+ 
   User.update(req.body, {
     individualHooks: true,
     where: {
@@ -150,7 +143,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
-// DELETE /api/users/1
+
 router.delete("/:id", (req, res) => {
   User.destroy({
     where: {

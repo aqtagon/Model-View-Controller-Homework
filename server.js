@@ -10,16 +10,14 @@ const sequelize = require("./config/connection");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
-    // hash based message auth code
-    // assign session cookie, server compares to secret to make sure cookie wasn't modified by client
-    // replaced by secret stored in .env file
+    
     secret: "Super secret secret",
     cookie: {},
-    // forces session to be saved back to session store even if cookie not modified
+    
     resave: false,
-    // save session as part of Store
+    
     saveUninitialized: true,
-    // create connection with DB. set up session table. allow sequelize to save session into DB
+   
     store: new SequelizeStore({
         db: sequelize
     })

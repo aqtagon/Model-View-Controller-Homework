@@ -14,7 +14,7 @@ async function loginFormHandler(event) {
         headers: { "Content-Type": "application/json" },
       });
   
-      // check response status
+      
       if (response.ok) {
         document.location.replace("/dashboard/");
       } else {
@@ -41,7 +41,7 @@ async function signupFormHandler(event) {
       headers: { "Content-Type": "application/json" },
     });
 
-    // check response status
+    
     if (response.ok) {
       document.location.replace("/dashboard/");
     } else {
