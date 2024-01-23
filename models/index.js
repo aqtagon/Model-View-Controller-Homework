@@ -3,7 +3,7 @@ const user = require("./user");
 const comment = require("./comment");
 
 
-user.hasMany(Post, {
+user.hasMany(post, {
     foreignKey: "user_id"
 });
 
