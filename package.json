@@ -2,7 +2,7 @@
   "name": "model-view-controller-homework",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "migrate": "sequelize db:migrate",
@@ -19,7 +19,13 @@
     "express-handlebars": "^7.1.2",
     "express-session": "^1.17.3",
     "mysql2": "^3.7.1",
-    "sequelize": "^6.35.2",
+    "sequelize": "^6.35.2"
+  },
+  "devDependencies": {
     "sequelize-cli": "^6.6.2"
+  },
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
   }
 }
