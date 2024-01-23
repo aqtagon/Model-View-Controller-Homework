@@ -1,14 +1,14 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
-const { post, user, comment } = require("../models");
+const { Post, User, Comment } = require("../models");
 
 
 router.get("/", (req, res) => {
   console.log("======================");
-  post.findAll({
+  Post.findAll({
     include: [
       {
-        model: comment,
+        model: Comment,
         attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
         include: {
           model: User,
@@ -35,7 +35,7 @@ router.get("/", (req, res) => {
 
 
 router.get("/post/:id", (req, res) => {
-  post.findOne({
+  Post.findOne({
     where: {
       id: req.params.id,
     },
