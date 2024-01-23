@@ -10,7 +10,7 @@ class post extends Model {
       user_id: body.user_id,
       post_id: body.post_id,
     }).then(() => {
-      return Post.findOne({
+      return post.findOne({
         where: {
           id: body.post_id,
         },
@@ -30,7 +30,7 @@ class post extends Model {
 }
 
 
-Post.init(
+post.init(
   {
     id: {
       type: DataTypes.INTEGER,
