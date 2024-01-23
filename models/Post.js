@@ -66,4 +66,4 @@ post.init(
   }
 );
 
-module.exports = post;
+module.exports = Post;
