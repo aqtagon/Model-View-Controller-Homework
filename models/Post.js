@@ -2,7 +2,7 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
 
-class Post extends Model {
+class post extends Model {
   
   static upvote(body, models) {
     
@@ -66,4 +66,4 @@ Post.init(
   }
 );
 
-module.exports = Post;
+module.exports = post;
