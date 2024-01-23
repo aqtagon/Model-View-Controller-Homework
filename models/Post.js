@@ -2,15 +2,15 @@ const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
 
-class post extends Model {
+class Post extends Model {
   
   static upvote(body, models) {
     
     return models.Vote.create({
       user_id: body.user_id,
-      post_id: body.post_id,
+      post_id: body.post_id,  
     }).then(() => {
-      return post.findOne({
+      return Post.findOne({
         where: {
           id: body.post_id,
         },
@@ -30,7 +30,7 @@ class post extends Model {
 }
 
 
-post.init(
+Post.init(
   {
     id: {
       type: DataTypes.INTEGER,
